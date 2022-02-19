@@ -11,6 +11,7 @@ from azure.mgmt.resource import ResourceManagementClient
 def parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+    parser.add_argument("-s", "--subscription", required=True, help="subscription id")
     parser.add_argument("-n", "--rgname", required=True, help="resource group name")
     parser.add_argument("-l", "--location", required=True, help="location")
     args = parser.parse_args()
@@ -24,9 +25,8 @@ def main():
     #Validate location
     logging.info("Validating Location... \'{0}\'".format(args.location))
     credential = AzureCliCredential()
-    subscription_id = os.environ["AZURE_SUBSCRIPTION_ID"]
     subscription_client = SubscriptionClient(credential)
-    locations = subscription_client.subscriptions.list_locations(subscription_id)
+    locations = subscription_client.subscriptions.list_locations(args.subscription)
     valid_location = False
     for location in locations:
         if location.name == args.location:
