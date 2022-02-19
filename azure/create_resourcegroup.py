@@ -39,7 +39,7 @@ def main():
     
     #Creation Resource Group
     logging.info("Creating Resource Group... \'{0}\'".format(args.rgname))
-    resource_client = ResourceManagementClient(credential, subscription)
+    resource_client = ResourceManagementClient(credential, args.subscription)
     rg_result = resource_client.resource_groups.create_or_update(args.rgname,{"location": args.location})
     logging.info("Resource Group Successfully Created ")
 
