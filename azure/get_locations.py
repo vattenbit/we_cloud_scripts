@@ -21,6 +21,7 @@ def main():
     init_log(verbose=args.verbose)
 
     #Get Locations
+    logging.info("Getting Locations from Azure")
     credential = AzureCliCredential()
     subscription_client = SubscriptionClient(credential)
     locations = subscription_client.subscriptions.list_locations(args.subscription)
@@ -30,9 +31,11 @@ def main():
     locations_json = json.dumps(locations_json, sort_keys=True, indent=4)
 
     #Print in file
+    logging.info("Saving to file data/locations.json")
     f = open("data/locations.json", "w")
     f.write(str(locations_json))
     f.close()
+    logging.info("Successfully saved")
 
 if __name__ == "__main__":
     main()
